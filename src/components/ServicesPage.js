@@ -126,7 +126,7 @@ const ServicesPage = () => {
           <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-12">
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="p-6 md:p-8 flex flex-col justify-center">
-                <h2 className="text-2xl font-bold text-[#3a2a1f] mb-4">Complete Transformation Services</h2>
+                <h2 className="text-2xl font-bold text-[#3a2a1f] mb-4 break-words">Complete Transformation Services</h2>
                 <p className="text-[#7d6b5d] mb-4 text-sm">
                   Our team specializes in complete room and home transformations that dramatically enhance both 
                   the aesthetics and functionality of your space. We handle everything from initial concept 
@@ -135,7 +135,7 @@ const ServicesPage = () => {
                 <ul className="space-y-2 mb-4 text-sm">
                   {['Design consultation', 'Custom plans', 'Material selection', 'Construction', 'Styling & decoration'].map((item, i) => (
                     <li key={i} className="flex items-center">
-                      <svg className="w-4 h-4 mr-2 text-[#906c3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 mr-2 text-[#906c3e] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span className="text-[#5a4a3f]">{item}</span>
@@ -157,7 +157,7 @@ const ServicesPage = () => {
                 </motion.button>
               </div>
               <div 
-                className="relative cursor-pointer"
+                className="relative cursor-pointer h-64 md:h-auto"
                 onClick={() => {
                   const element = document.getElementById('portfolio');
                   if (element) {
@@ -166,10 +166,10 @@ const ServicesPage = () => {
                 }}
               >
                 <div className="grid grid-cols-2 grid-rows-2 h-full">
-                  <div className="bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600566753376-12c8ab8e17a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
-                  <div className="bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
-                  <div className="bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1615529182904-14819c35db37?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
-                  <div className="bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
+                  <div className="bg-cover bg-center h-32 md:h-full" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600566753376-12c8ab8e17a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
+                  <div className="bg-cover bg-center h-32 md:h-full" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
+                  <div className="bg-cover bg-center h-32 md:h-full" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1615529182904-14819c35db37?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
+                  <div className="bg-cover bg-center h-32 md:h-full" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" }}></div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40"></div>
                 <div className="absolute bottom-6 left-6 text-white font-bold text-xl flex items-center">
@@ -185,32 +185,32 @@ const ServicesPage = () => {
 
         {/* Contact CTA */}
         <AnimatedSection animation="fade-up" delay={0.4}>
-          <div className="bg-[#3a2a1f] text-white rounded-lg shadow-xl p-8 md:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="bg-[#3a2a1f] text-white rounded-lg shadow-xl p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
               <div>
-                <h2 className="text-2xl font-bold mb-4">Ready to start your project?</h2>
+                <h2 className="text-xl md:text-2xl font-bold mb-4">Ready to start your project?</h2>
                 <p className="text-gray-300 mb-6">
                   Contact us today to schedule a consultation with our design team. 
                   We'll help bring your vision to life!
                 </p>
-                <ul className="space-y-2 text-gray-300 mb-6">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-[#906c3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <ul className="space-y-3 text-gray-300 mb-6">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 mr-2 text-[#906c3e] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Phone: 343-996-9179
+                    <span>Phone: 343-996-9179</span>
                   </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-[#906c3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 mr-2 text-[#906c3e] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Email: d.3ller@yahoo.com
+                    <span>Email: d.3ller@yahoo.com</span>
                   </li>
                 </ul>
               </div>
               <div className="text-center md:text-right">
                 <motion.button
-                  className="bg-[#906c3e] text-white px-8 py-3 rounded-md font-medium hover:bg-[#7d5b30] transition-colors shadow-md"
+                  className="bg-[#906c3e] text-white px-6 md:px-8 py-3 rounded-md font-medium hover:bg-[#7d5b30] transition-colors shadow-md w-full md:w-auto"
                   whileHover={{ scale: 1.05, boxShadow: "0 4px 8px rgba(0,0,0,0.15)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
@@ -228,31 +228,31 @@ const ServicesPage = () => {
         </AnimatedSection>
 
         {/* Experience Section */}
-        <AnimatedSection animation="fade-up" delay={0.5} className="mt-20">
-          <div className="bg-white rounded-lg shadow-lg p-8 md:p-10">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold text-[#3a2a1f] mb-4">Our Experience</h2>
-              <p className="text-[#7d6b5d] max-w-3xl mx-auto">
+        <AnimatedSection animation="fade-up" delay={0.5} className="mt-16 md:mt-20">
+          <div className="bg-white rounded-lg shadow-lg p-6 md:p-10">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#3a2a1f] mb-3 md:mb-4">Our Experience</h2>
+              <p className="text-[#7d6b5d] max-w-3xl mx-auto text-sm md:text-base">
                 3ller¿ brings 8 years of industry experience to every project, with a portfolio that includes working with prestigious clients and ambassadors in Ottawa.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-              <div className="p-6">
-                <div className="text-[#906c3e] text-4xl font-bold mb-2">8+</div>
-                <div className="text-[#3a2a1f] font-medium">Years Experience</div>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 text-center">
+              <div className="p-4 md:p-6">
+                <div className="text-[#906c3e] text-3xl md:text-4xl font-bold mb-2">8+</div>
+                <div className="text-[#3a2a1f] font-medium text-sm md:text-base">Years Experience</div>
               </div>
-              <div className="p-6">
-                <div className="text-[#906c3e] text-4xl font-bold mb-2">150+</div>
-                <div className="text-[#3a2a1f] font-medium">Projects Completed</div>
+              <div className="p-4 md:p-6">
+                <div className="text-[#906c3e] text-3xl md:text-4xl font-bold mb-2">150+</div>
+                <div className="text-[#3a2a1f] font-medium text-sm md:text-base">Projects Completed</div>
               </div>
-              <div className="p-6">
-                <div className="text-[#906c3e] text-4xl font-bold mb-2">50+</div>
-                <div className="text-[#3a2a1f] font-medium">Premium Clients</div>
+              <div className="p-4 md:p-6">
+                <div className="text-[#906c3e] text-3xl md:text-4xl font-bold mb-2">50+</div>
+                <div className="text-[#3a2a1f] font-medium text-sm md:text-base">Diplomatic Clients</div>
               </div>
-              <div className="p-6">
-                <div className="text-[#906c3e] text-4xl font-bold mb-2">15+</div>
-                <div className="text-[#3a2a1f] font-medium">Design Awards</div>
+              <div className="p-4 md:p-6">
+                <div className="text-[#906c3e] text-3xl md:text-4xl font-bold mb-2">98%</div>
+                <div className="text-[#3a2a1f] font-medium text-sm md:text-base">Client Satisfaction</div>
               </div>
             </div>
           </div>
