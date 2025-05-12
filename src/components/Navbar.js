@@ -86,8 +86,16 @@ const Navbar = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
+      // Use both approaches for better compatibility
+      window.location.hash = sectionId; // Update URL hash
+      
+      // Add a small delay before scrolling to ensure the hash change is processed
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setIsMobileMenuOpen(false);
+      }, 100);
+    } else {
+      console.error(`Element with ID "${sectionId}" not found`);
     }
   };
 

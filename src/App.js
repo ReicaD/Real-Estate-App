@@ -61,12 +61,11 @@ function App() {
             <div id="about">
               <AboutSection />
             </div>
-            <FeaturedPortfolio />
+            <div id="portfolio">
+              <FeaturedPortfolio />
+            </div>
             <div id="services">
               <ServicesPage />
-            </div>
-            <div id="portfolio">
-              <PortfolioPage />
             </div>
             <div id="products">
               <CollectionsPage />

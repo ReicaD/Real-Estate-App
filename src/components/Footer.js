@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Footer = () => {
-  // Placeholder video URL - replace with your actual video file path or URL
-  const videoSrc = 'https://videos.pexels.com/video-files/854005/854005-hd_1920_1080_25fps.mp4'; // Example serene beach scene
+  // Updated to a more reliable video URL from Pexels
+  const videoSrc = 'https://player.vimeo.com/external/371845664.sd.mp4?s=3e4c4b7c6a59b1028b016e7eec768ff889a1f92d&profile_id=164&oauth2_token_id=57447761'; // Reliable Vimeo hosted video
 
   return (
     <footer className="relative text-white py-12 overflow-hidden"> 

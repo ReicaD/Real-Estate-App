@@ -4,6 +4,34 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Add cache-busting mechanism
+if (process.env.NODE_ENV === 'production') {
+  // Clear cache on load in production
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  
+  // Clear localStorage cache
+  if (window.localStorage) {
+    const buildTimestamp = new Date().getTime();
+    const lastBuildTimestamp = localStorage.getItem('buildTimestamp');
+    
+    if (!lastBuildTimestamp || parseInt(lastBuildTimestamp) < buildTimestamp) {
+      localStorage.setItem('buildTimestamp', buildTimestamp);
+      if (caches) {
+        // Clear all caches
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
+        });
+      }
+    }
+  }
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
