@@ -1,266 +1,390 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register the ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+const ServiceCard = ({ icon, title, description, delay, cardRef }) => {
+  return (
+    <div
+      ref={cardRef}
+      className="bg-white rounded-lg shadow-lg p-8 transition-all duration-300 hover:shadow-xl service-card"
+    >
+      <div className="text-[#b8a283] mb-5 service-icon">{icon}</div>
+      <h3 className="text-xl font-bold text-[#5a4a3f] mb-3 service-title">{title}</h3>
+      <p className="text-[#7d6b5d] service-description">{description}</p>
+      <motion.button
+        className="mt-5 text-[#b8a283] font-medium flex items-center service-button"
+        whileHover={{ x: 5 }}
+      >
+        Learn more
+        <svg
+          className="w-4 h-4 ml-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M14 5l7 7m0 0l-7 7m7-7H3"
+          />
+        </svg>
+      </motion.button>
+    </div>
+  );
+};
 
 const ServicesSection = () => {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const servicesContainerRef = useRef(null);
+  const ctaButtonRef = useRef(null);
+  const serviceRefs = useRef([]);
+
+  // Initialize an array to hold the service card refs
+  serviceRefs.current = [];
+
+  // Add to refs helper function
+  const addToRefs = (el) => {
+    if (el && !serviceRefs.current.includes(el)) {
+      serviceRefs.current.push(el);
+    }
+  };
+
+  // GSAP ScrollTrigger animations
+  useEffect(() => {
+    if (
+      sectionRef.current &&
+      headingRef.current && 
+      descriptionRef.current &&
+      servicesContainerRef.current &&
+      serviceRefs.current.length > 0
+    ) {
+      // Parallax effect for the section background
+      gsap.to(sectionRef.current, {
+        backgroundPosition: "50% 100%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
+
+      // Heading animation
+      gsap.fromTo(
+        headingRef.current,
+        { y: -50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: "top bottom-=100",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Description animation
+      gsap.fromTo(
+        descriptionRef.current,
+        { y: -30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: descriptionRef.current,
+            start: "top bottom-=80",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Service cards staggered animations
+      serviceRefs.current.forEach((card, index) => {
+        if (card) {
+          // Card reveal animation
+          gsap.fromTo(
+            card,
+            { y: 100, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom-=50",
+                toggleActions: "play none none none"
+              }
+            }
+          );
+
+          // Internal elements animation (icon, title, description, button)
+          const cardElements = [
+            card.querySelector('.service-icon'),
+            card.querySelector('.service-title'),
+            card.querySelector('.service-description'),
+            card.querySelector('.service-button')
+          ];
+
+          gsap.fromTo(
+            cardElements,
+            { y: 20, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.4,
+              stagger: 0.1,
+              delay: 0.1 + (index * 0.05),
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom-=30",
+                toggleActions: "play none none none"
+              }
+            }
+          );
+
+          // Hover animation
+          const hoverTl = gsap.timeline({ paused: true });
+          
+          hoverTl.to(card, {
+            y: -10,
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            duration: 0.3
+          });
+          
+          card.addEventListener("mouseenter", () => hoverTl.play());
+          card.addEventListener("mouseleave", () => hoverTl.reverse());
+        }
+      });
+
+      // CTA button animation
+      if (ctaButtonRef.current) {
+        gsap.fromTo(
+          ctaButtonRef.current,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            scrollTrigger: {
+              trigger: ctaButtonRef.current,
+              start: "top bottom-=50",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
+
+      // Cleanup
+      return () => {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        
+        // Remove event listeners
+        serviceRefs.current.forEach(card => {
+          if (card) {
+            card.removeEventListener("mouseenter", () => {});
+            card.removeEventListener("mouseleave", () => {});
+          }
+        });
+      };
+    }
+  }, []);
+
   const services = [
     {
-      id: 1,
-      title: 'Interior Design',
-      description:
-        'Full-service interior design for residential and commercial spaces, from concept to completion.',
       icon: (
         <svg
-          xmlns='http://www.w3.org/2000/svg'
-          className='h-10 w-10'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
+            strokeLinecap="round"
+            strokeLinejoin="round"
             strokeWidth={1.5}
-            d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
           />
         </svg>
       ),
+      title: "Interior Design Consultation",
+      description:
+        "Our professional interior designers will consult with you to understand your vision, style preferences, and functional needs to create a personalized design plan.",
     },
     {
-      id: 2,
-      title: 'Space Planning',
-      description:
-        'Optimize your space for functionality and flow with our expert space planning services.',
       icon: (
         <svg
-          xmlns='http://www.w3.org/2000/svg'
-          className='h-10 w-10'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
+            strokeLinecap="round"
+            strokeLinejoin="round"
             strokeWidth={1.5}
-            d='M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7'
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
           />
         </svg>
       ),
+      title: "In-Home Consultations",
+      description:
+        "We offer professional house calls where our design experts visit your space to assess, measure, and help you visualize potential design solutions in person.",
     },
     {
-      id: 3,
-      title: 'Custom Furniture',
-      description:
-        'Unique, made-to-measure furniture pieces designed specifically for your space and style.',
       icon: (
         <svg
-          xmlns='http://www.w3.org/2000/svg'
-          className='h-10 w-10'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
+            strokeLinecap="round"
+            strokeLinejoin="round"
             strokeWidth={1.5}
-            d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'
+            d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
           />
         </svg>
       ),
+      title: "Space Planning",
+      description:
+        "Optimize your living or working space with our expert space planning services. We create functional layouts that maximize flow, comfort, and aesthetic appeal.",
     },
     {
-      id: 4,
-      title: 'Color Consultation',
-      description:
-        'Expert guidance on color schemes that enhance your space and reflect your personal style.',
       icon: (
         <svg
-          xmlns='http://www.w3.org/2000/svg'
-          className='h-10 w-10'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
+            strokeLinecap="round"
+            strokeLinejoin="round"
             strokeWidth={1.5}
-            d='M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01'
+            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
           />
         </svg>
       ),
+      title: "Custom Color Consultation",
+      description:
+        "Find the perfect color palette for your space with our specialized color consultation services. We help select hues that enhance mood, complement furnishings, and reflect your personality.",
+    },
+    {
+      icon: (
+        <svg
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
+          />
+        </svg>
+      ),
+      title: "Furniture Selection",
+      description:
+        "Let us help you choose furniture pieces that perfectly complement your space, balancing aesthetics, comfort, and functionality for a cohesive look.",
+    },
+    {
+      icon: (
+        <svg
+          className="w-12 h-12"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
+          />
+        </svg>
+      ),
+      title: "Project Management",
+      description:
+        "From concept to completion, we handle all aspects of your interior design project, coordinating contractors, deliveries, and installations for a seamless experience.",
     },
   ];
 
   return (
-    <section className='py-16 bg-gray-50'>
-      <div className='container mx-auto px-4'>
-        <AnimatedSection animation='fade-up'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl font-bold text-gray-800 mb-4'>
-              Our Design Services
-            </h2>
-            <p className='text-gray-600 max-w-lg mx-auto'>
-              We offer a comprehensive range of interior design services to
-              transform your space into something extraordinary.
-            </p>
-          </div>
-        </AnimatedSection>
+    <section 
+      ref={sectionRef} 
+      className="py-20 bg-gradient-to-b from-white to-[#f8f4e9]"
+      id="services"
+      style={{ backgroundSize: "100% 200%" }}
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 
+            ref={headingRef}
+            className="text-3xl font-bold text-[#5a4a3f] mb-4"
+          >
+            Our Premium Design Services
+          </h2>
+          <p 
+            ref={descriptionRef}
+            className="text-[#7d6b5d] max-w-2xl mx-auto"
+          >
+            We offer a comprehensive range of interior design services tailored to your needs,
+            whether you're looking to refresh a single room or transform your entire home.
+            Our team of experts is here to guide you through every step of the process.
+          </p>
+        </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+        <div 
+          ref={servicesContainerRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {services.map((service, index) => (
-            <AnimatedSection
-              key={service.id}
-              animation='fade-up'
+            <ServiceCard
+              key={index}
+              icon={service.icon}
+              title={service.title}
+              description={service.description}
               delay={0.1 * (index + 1)}
-            >
-              <motion.div
-                className='bg-white p-8 rounded-lg shadow-md transition-transform hover:-translate-y-1 hover:shadow-lg'
-                whileHover={{ y: -8 }}
-              >
-                <div className='text-gray-800 mb-4'>{service.icon}</div>
-                <h3 className='text-xl font-bold text-gray-800 mb-3'>
-                  {service.title}
-                </h3>
-                <p className='text-gray-600 mb-4'>{service.description}</p>
-                <motion.a
-                  href='#'
-                  className='text-gray-800 font-medium inline-flex items-center group'
-                  whileHover={{ x: 5 }}
-                >
-                  Learn More
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M9 5l7 7-7 7'
-                    />
-                  </svg>
-                </motion.a>
-              </motion.div>
-            </AnimatedSection>
+              cardRef={el => addToRefs(el)}
+            />
           ))}
         </div>
 
-        {/* Process Section */}
-        <AnimatedSection animation='fade-up' delay={0.5} className='mt-20'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl font-bold text-gray-800 mb-4'>
-              Our Design Process
-            </h2>
-            <p className='text-gray-600 max-w-lg mx-auto'>
-              We follow a proven, client-centered approach to bring your vision
-              to life.
-            </p>
-          </div>
-
-          <div className='flex flex-col md:flex-row justify-between'>
-            <AnimatedSection
-              className='md:w-1/4 mb-8 md:mb-0 text-center px-4'
-              animation='fade-up'
-              delay={0.6}
-            >
-              <motion.div
-                className='w-16 h-16 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold'
-                whileHover={{ scale: 1.1 }}
-              >
-                1
-              </motion.div>
-              <h3 className='text-xl font-bold text-gray-800 mb-2'>
-                Consultation
-              </h3>
-              <p className='text-gray-600'>
-                We meet to discuss your needs, preferences, and vision for your
-                space.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection
-              className='md:w-1/4 mb-8 md:mb-0 text-center px-4'
-              animation='fade-up'
-              delay={0.7}
-            >
-              <motion.div
-                className='w-16 h-16 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold'
-                whileHover={{ scale: 1.1 }}
-              >
-                2
-              </motion.div>
-              <h3 className='text-xl font-bold text-gray-800 mb-2'>
-                Concept Development
-              </h3>
-              <p className='text-gray-600'>
-                We create detailed design concepts based on your requirements
-                and feedback.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection
-              className='md:w-1/4 mb-8 md:mb-0 text-center px-4'
-              animation='fade-up'
-              delay={0.8}
-            >
-              <motion.div
-                className='w-16 h-16 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold'
-                whileHover={{ scale: 1.1 }}
-              >
-                3
-              </motion.div>
-              <h3 className='text-xl font-bold text-gray-800 mb-2'>
-                Implementation
-              </h3>
-              <p className='text-gray-600'>
-                We manage the execution of the design, coordinating with
-                contractors and vendors.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection
-              className='md:w-1/4 text-center px-4'
-              animation='fade-up'
-              delay={0.9}
-            >
-              <motion.div
-                className='w-16 h-16 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold'
-                whileHover={{ scale: 1.1 }}
-              >
-                4
-              </motion.div>
-              <h3 className='text-xl font-bold text-gray-800 mb-2'>
-                Final Reveal
-              </h3>
-              <p className='text-gray-600'>
-                We present your transformed space, ensuring every detail meets
-                your expectations.
-              </p>
-            </AnimatedSection>
-          </div>
-        </AnimatedSection>
-
-        {/* CTA */}
-        <AnimatedSection
-          animation='fade-up'
-          delay={1}
-          className='mt-16 text-center'
+        <div
+          className="mt-16 text-center"
         >
-          <motion.a
-            href='#'
-            className='inline-block bg-gray-800 text-white px-8 py-3 rounded-md font-medium hover:bg-gray-700 transition duration-300'
-            whileHover={{ scale: 1.05 }}
+          <motion.button
+            ref={ctaButtonRef}
+            className="bg-[#b8a283] text-white px-8 py-3 rounded-md font-medium hover:bg-[#a59178] transition-colors shadow-md"
+            whileHover={{ scale: 1.05, boxShadow: "0 4px 8px rgba(0,0,0,0.15)" }}
             whileTap={{ scale: 0.95 }}
           >
             Schedule a Consultation
-          </motion.a>
-        </AnimatedSection>
+          </motion.button>
+        </div>
       </div>
     </section>
   );

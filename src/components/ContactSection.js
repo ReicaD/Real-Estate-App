@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const ContactSection = () => {
   const [email, setEmail] = useState('');
@@ -25,31 +26,31 @@ const ContactSection = () => {
   };
 
   return (
-    <section className='py-16 bg-white'>
+    <section className='py-16 bg-gradient-to-b from-white to-[#f8f4e9]'>
       <div className='container mx-auto px-4'>
         <div className='flex flex-col lg:flex-row'>
-          {/* Contact Form */}
+          {/* Contact Form - Updated Design */}
           <div className='lg:w-1/2 lg:pr-10 mb-10 lg:mb-0'>
-            <h2 className='text-3xl font-bold text-gray-800 mb-6'>
+            <h2 className='text-3xl font-bold text-[#5a4a3f] mb-6'>
               Get in Touch
             </h2>
-            <p className='text-gray-600 mb-8'>
+            <p className='text-[#7d6b5d] mb-8'>
               Have a question or want to discuss your interior design project?
               Fill out the form below and our team will get back to you shortly.
             </p>
 
-            <form onSubmit={handleContactSubmit}>
-              <div className='mb-4'>
+            <form onSubmit={handleContactSubmit} className="space-y-5">
+              <div>
                 <label
                   htmlFor='name'
-                  className='block text-gray-700 text-sm font-medium mb-2'
+                  className='block text-[#5a4a3f] text-sm font-medium mb-2'
                 >
                   Your Name
                 </label>
                 <input
                   type='text'
                   id='name'
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400'
+                  className='w-full px-4 py-3 border border-[#d7c9ae] rounded-md focus:outline-none focus:ring-2 focus:ring-[#a59787] focus:border-[#a59787] transition-all shadow-sm'
                   placeholder='John Doe'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -57,17 +58,17 @@ const ContactSection = () => {
                 />
               </div>
 
-              <div className='mb-4'>
+              <div>
                 <label
                   htmlFor='email'
-                  className='block text-gray-700 text-sm font-medium mb-2'
+                  className='block text-[#5a4a3f] text-sm font-medium mb-2'
                 >
                   Email Address
                 </label>
                 <input
                   type='email'
                   id='email'
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400'
+                  className='w-full px-4 py-3 border border-[#d7c9ae] rounded-md focus:outline-none focus:ring-2 focus:ring-[#a59787] focus:border-[#a59787] transition-all shadow-sm'
                   placeholder='john@example.com'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -75,17 +76,17 @@ const ContactSection = () => {
                 />
               </div>
 
-              <div className='mb-6'>
+              <div>
                 <label
                   htmlFor='message'
-                  className='block text-gray-700 text-sm font-medium mb-2'
+                  className='block text-[#5a4a3f] text-sm font-medium mb-2'
                 >
                   Your Message
                 </label>
                 <textarea
                   id='message'
                   rows='4'
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400'
+                  className='w-full px-4 py-3 border border-[#d7c9ae] rounded-md focus:outline-none focus:ring-2 focus:ring-[#a59787] focus:border-[#a59787] transition-all shadow-sm'
                   placeholder='Tell us about your project...'
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -93,28 +94,30 @@ const ContactSection = () => {
                 ></textarea>
               </div>
 
-              <button
+              <motion.button
                 type='submit'
-                className='bg-gray-800 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-700 transition duration-300'
+                className='bg-[#7d6b5d] text-white px-6 py-3 rounded-md font-medium hover:bg-[#5a4a3f] transition-all duration-300 shadow-md'
+                whileHover={{ scale: 1.03, boxShadow: "0 4px 8px rgba(0,0,0,0.15)" }}
+                whileTap={{ scale: 0.97 }}
               >
                 Send Message
-              </button>
+              </motion.button>
             </form>
           </div>
 
-          {/* Contact Info & Newsletter */}
+          {/* Contact Info & Newsletter - Updated Design */}
           <div className='lg:w-1/2 lg:pl-10'>
-            <div className='bg-gray-50 p-8 rounded-lg mb-8'>
-              <h3 className='text-xl font-bold text-gray-800 mb-4'>
+            <div className='bg-gradient-to-br from-[#e8ddc9] to-[#f8f4e9] p-8 rounded-lg shadow-md mb-8'>
+              <h3 className='text-xl font-bold text-[#5a4a3f] mb-4'>
                 Contact Information
               </h3>
 
               <div className='space-y-4'>
                 <div className='flex items-start'>
-                  <div className='mr-3 text-gray-800'>
+                  <div className='mr-3 text-[#7d6b5d] bg-white p-2 rounded-full shadow-sm'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -134,18 +137,18 @@ const ContactSection = () => {
                     </svg>
                   </div>
                   <div>
-                    <p className='font-medium text-gray-800'>Address</p>
-                    <p className='text-gray-600'>
-                      123 Design Street, Creative City, 90210
+                    <p className='font-medium text-[#5a4a3f]'>Address</p>
+                    <p className='text-[#7d6b5d]'>
+                      Ottawa, Ontario
                     </p>
                   </div>
                 </div>
 
                 <div className='flex items-start'>
-                  <div className='mr-3 text-gray-800'>
+                  <div className='mr-3 text-[#7d6b5d] bg-white p-2 rounded-full shadow-sm'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -159,16 +162,16 @@ const ContactSection = () => {
                     </svg>
                   </div>
                   <div>
-                    <p className='font-medium text-gray-800'>Email</p>
-                    <p className='text-gray-600'>info@interiordesign.com</p>
+                    <p className='font-medium text-[#5a4a3f]'>Email</p>
+                    <p className='text-[#7d6b5d]'>d.3ller@yahoo.com</p>
                   </div>
                 </div>
 
                 <div className='flex items-start'>
-                  <div className='mr-3 text-gray-800'>
+                  <div className='mr-3 text-[#7d6b5d] bg-white p-2 rounded-full shadow-sm'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='none'
                       viewBox='0 0 24 24'
                       stroke='currentColor'
@@ -182,18 +185,23 @@ const ContactSection = () => {
                     </svg>
                   </div>
                   <div>
-                    <p className='font-medium text-gray-800'>Phone</p>
-                    <p className='text-gray-600'>(555) 123-4567</p>
+                    <p className='font-medium text-[#5a4a3f]'>Phone</p>
+                    <p className='text-[#7d6b5d]'>343-996-9179</p>
                   </div>
                 </div>
               </div>
 
               <div className='mt-6'>
-                <h4 className='font-medium text-gray-800 mb-2'>Follow Us</h4>
+                <h4 className='font-medium text-[#5a4a3f] mb-2'>Follow Us</h4>
                 <div className='flex space-x-4'>
-                  <a href='#' className='text-gray-600 hover:text-gray-800'>
+                  <motion.a 
+                    href='#' 
+                    className='text-[#7d6b5d] hover:text-[#5a4a3f] bg-white p-2 rounded-full shadow-sm'
+                    whileHover={{ scale: 1.1, backgroundColor: "#f8f4e9" }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <svg
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='currentColor'
                       viewBox='0 0 24 24'
                       aria-hidden='true'
@@ -204,10 +212,15 @@ const ContactSection = () => {
                         clipRule='evenodd'
                       />
                     </svg>
-                  </a>
-                  <a href='#' className='text-gray-600 hover:text-gray-800'>
+                  </motion.a>
+                  <motion.a 
+                    href='#' 
+                    className='text-[#7d6b5d] hover:text-[#5a4a3f] bg-white p-2 rounded-full shadow-sm'
+                    whileHover={{ scale: 1.1, backgroundColor: "#f8f4e9" }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <svg
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='currentColor'
                       viewBox='0 0 24 24'
                       aria-hidden='true'
@@ -218,27 +231,32 @@ const ContactSection = () => {
                         clipRule='evenodd'
                       />
                     </svg>
-                  </a>
-                  <a href='#' className='text-gray-600 hover:text-gray-800'>
+                  </motion.a>
+                  <motion.a 
+                    href='#' 
+                    className='text-[#7d6b5d] hover:text-[#5a4a3f] bg-white p-2 rounded-full shadow-sm'
+                    whileHover={{ scale: 1.1, backgroundColor: "#f8f4e9" }}
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <svg
-                      className='h-6 w-6'
+                      className='h-5 w-5'
                       fill='currentColor'
                       viewBox='0 0 24 24'
                       aria-hidden='true'
                     >
                       <path d='M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84' />
                     </svg>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
 
-            {/* Newsletter */}
-            <div className='bg-gray-800 p-8 rounded-lg text-white'>
+            {/* Newsletter - Updated Design */}
+            <div className='bg-gradient-to-r from-[#d7c9ae] to-[#e8ddc9] p-8 rounded-lg shadow-md text-[#5a4a3f]'>
               <h3 className='text-xl font-bold mb-4'>
                 Subscribe to Our Newsletter
               </h3>
-              <p className='mb-6 text-gray-300'>
+              <p className='mb-6 text-[#7d6b5d]'>
                 Stay updated with our latest design trends, tips, and exclusive
                 offers.
               </p>
@@ -249,18 +267,20 @@ const ContactSection = () => {
               >
                 <input
                   type='email'
-                  className='flex-grow px-4 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400'
+                  className='flex-grow px-4 py-3 rounded-md border border-[#d7c9ae] focus:outline-none focus:ring-2 focus:ring-[#a59787] focus:border-[#a59787] shadow-sm transition-all'
                   placeholder='Your email address'
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   required
                 />
-                <button
+                <motion.button
                   type='submit'
-                  className='bg-white text-gray-800 px-6 py-2 rounded-md font-medium hover:bg-gray-200 transition duration-300'
+                  className='bg-[#7d6b5d] text-white px-6 py-3 rounded-md font-medium hover:bg-[#5a4a3f] shadow-md transition-all'
+                  whileHover={{ scale: 1.03, boxShadow: "0 4px 8px rgba(0,0,0,0.15)" }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   Subscribe
-                </button>
+                </motion.button>
               </form>
             </div>
           </div>
