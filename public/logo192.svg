@@ -1,0 +1,14 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="192" height="192" rx="24" fill="#f8f4e9"/>
+  
+  <!-- 3ller text -->
+  <text x="96" y="96" font-family="Arial, sans-serif" font-weight="bold" font-size="68" text-anchor="middle" fill="#3a2a1f">3ller</text>
+  
+  <!-- Question mark -->
+  <text x="142" y="96" font-family="Arial, sans-serif" font-weight="bold" font-size="68" text-anchor="middle" fill="#906c3e">¿</text>
+  
+  <!-- Decorative element -->
+  <rect x="36" y="120" width="120" height="6" rx="3" fill="#906c3e"/>
+  <rect x="66" y="132" width="60" height="6" rx="3" fill="#906c3e"/>
+</svg> 
