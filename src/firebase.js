@@ -5,19 +5,19 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAtpihXSYvj7_ahcfU5TIgsbWbHPHA0apU",
-  authDomain: "real-estate-app-9c523.firebaseapp.com",
-  projectId: "real-estate-app-9c523",
-  storageBucket: "real-estate-app-9c523.appspot.com",
-  messagingSenderId: "986104607915",
-  appId: "1:986104607915:web:ceeb3dc9f7f9f55ca673ee",
-  measurementId: "G-194QPRN592"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Initialize Firebase only if environment variables are available
+const app = firebaseConfig.apiKey ? initializeApp(firebaseConfig) : null;
+const auth = app ? getAuth(app) : null;
+const db = app ? getFirestore(app) : null;
 
 // Initialize Google Provider with improved configuration
 const googleProvider = new GoogleAuthProvider();
