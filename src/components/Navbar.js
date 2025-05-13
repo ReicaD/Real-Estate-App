@@ -20,11 +20,10 @@ const Navbar = () => {
 
   // GSAP animations
   useEffect(() => {
-    // Create a gradient animation for the logo
     const logoElement = logoRef.current;
     const navbarElement = navbarRef.current;
     
-    if (logoElement && navbarElement) {
+    if (navbarElement) {
       // Background animation for navbar
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -43,19 +42,13 @@ const Navbar = () => {
       });
       
       // Animate the logo text color
-      tl.to('.logo-text', {
-        color: '#3a2a1f',
-        textShadow: 'none',
-        duration: 0.5,
-      }, "<");
-      
-      // Animate the gradient logo
-      gsap.to('.logo-gradient', {
-        backgroundPosition: '200% center', 
-        repeat: -1,
-        duration: 3,
-        ease: 'linear'
-      });
+      if (logoElement) {
+        tl.to('.logo-text', {
+          color: '#3a2a1f',
+          textShadow: 'none',
+          duration: 0.5,
+        }, "<");
+      }
       
       // Return cleanup function
       return () => {
@@ -121,7 +114,7 @@ const Navbar = () => {
                 }}
               >
                 <span 
-                  className={`logo-gradient font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#164A41] via-[#4D774E] to-[#C8B568] bg-size-200 animate-gradient`}
+                  className="font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#164A41] via-[#4D774E] to-[#C8B568] bg-size-200 animate-gradient"
                 >
                   3ller
                 </span>
@@ -252,12 +245,11 @@ const Navbar = () => {
           )}
         </div>
       </nav>
-      
+
       {/* Auth Modal */}
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-      />
+      {isAuthModalOpen && (
+        <AuthModal onClose={() => setIsAuthModalOpen(false)} />
+      )}
     </>
   );
 };
